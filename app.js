@@ -1,41 +1,77 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var main = function(){
+  "use strict";
+  
+    var shipSelected = null;
+    var shipOrientation = "horizontal";
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+  var selectShip = function(){
+    //   document.getElementById(EventSource.getElementById).style.color = "red";
+    this.style.color = "red";
+  };
 
-var app = express();
+  $(".other div").on("click", function(){
+      console.log(this.id);
+    // selectShip(this);
+    if(shipSelected == null){
+        this.style.color = "red";
+        shipSelected = this;
+    }
+    if(shipSelected != null){
+        shipSelected.style.color = "black";
+        this.style.color = "red";
+        shipSelected = this;
+        shipOrientation = "horizontal";
+    }
+    });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+    var gridCellHoverIn = function(){
+        if(shipSelected != null){
+    //Select subsequent cells in horizontal or vertical direction as far as the ship's size stretches
+            var coord = this.attr('id');
+            var i = 0;
+            if(shipOrientation === "horizontal" ){
+                i = 1;
+            }
+        this.style.backgroundColor = "black"
+    }
+    };
+    var gridCellHoverOut = function(){this.style.backgroundColor = "white"};
+        $(".board > .gridCell").hover(gridCellHoverIn, gridCellHoverOut);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+    // $(".board > .gridCell").hover(function(){
+    //     // console.log("gridCell hoverIn");
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    //     this.style.backgroundColor = "black";
+    // }, function (){
+    //     this.style.backgroundColor = "white"}
+    //     );
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  // var addCommentFromInputBox = function(){
+  //     var $new_comment;
+  //    if($(".comment-input input").val() !== ""){
+  //         $new_comment = $("<p>").text($(".comment-input input").val());
+  //         $new_comment.hide();
+  //         $(".comments").append($new_comment);
+  //         $(".comment-input input").val("");
+  //         $new_comment.fadeIn();
+  //    }
+  // };
 
-module.exports = app;
+  // $(".comment-input button").on("dblclick", function(){
+      // alert("You double clicked!");
+  // });
+
+  // $(".comment-input button").on("click", function(event) {
+  //     addCommentFromInputBox();
+  // });
+
+  // $(".comment-input input").on("keypress", function (event){
+  //     if (event.keyCode == 13){
+  //         addCommentFromInputBox();
+  //     }
+  // });
+};
+
+$(document).ready(main);
