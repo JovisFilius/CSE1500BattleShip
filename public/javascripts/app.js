@@ -28,11 +28,11 @@ var main = function(){
     }
     });
 
-    var gridCellHoverIn = function(){
+    var gridCellHoverIn = function(arg){
         if(shipSelected !== null){
     //Select subsequent cells in horizontal or vertical direction as far as the ship's size stretches
-            var yCoord = this.id.substring(0,1);
-            var xCoord = this.id.substring(1, this.id.length);
+            var yCoord = arg.id.substring(0,1);
+            var xCoord = arg.id.substring(1, arg.id.length);
             var newBackground = "lightgreen";
             var largestCoord = 10;
             var startCoord = 1;
@@ -69,13 +69,13 @@ var main = function(){
                 // console.log(newBackground);
                 cell.style.backgroundColor = newBackground;
             }
-            this.style.backgroundColor = newBackground;
+            arg.style.backgroundColor = newBackground;
         }
     };
-    var gridCellHoverOut = function(){
+    var gridCellHoverOut = function(arg){
         if(shipSelected !== null){
-            var yCoord = this.id.substring(0,1);
-            var xCoord = this.id.substring(1, this.id.length);
+            var yCoord = arg.id.substring(0,1);
+            var xCoord = arg.id.substring(1, arg.id.length);
             var newBackground = "white";
             var largestCoord = 10;
             var startCoord = 1;
@@ -101,10 +101,15 @@ var main = function(){
             // console.log(newBackground);
             cell.style.backgroundColor = newBackground;
             }
-            this.style.backgroundColor = newBackground;
+            arg.style.backgroundColor = newBackground;
         }
     };
-        $(".board > .gridCell").hover(gridCellHoverIn, gridCellHoverOut);
+    $(".board > .gridCell").hover(
+        function(){
+            gridCellHoverIn(this);
+        }, function(){
+            gridCellHoverOut(this);
+        });
 
 
         var toggleShipOrientation = function(){
@@ -121,6 +126,7 @@ var main = function(){
             }
             if(this.id === "play"){
                 console.log("play button clicked (no further implementation yet)");
+                // gridCellHoverIn(document.getElementById("A1"));
             }
         });
     // $(".board > .gridCell").hover(function(){
