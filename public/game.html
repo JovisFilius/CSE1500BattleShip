@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Battleship - CSE3.03</title>
+        <link href="stylesheets/reset.css" rel="stylesheet" type="text/css">
         <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
@@ -15,7 +16,7 @@
                 <img src="player.png" alt="Image of player">
                 <h4>You</h4>
                 <div class="board">
-                    <div class="A"><h4>A</h4></div>
+                    <div class="coordinate"><h4>A</h4></div>
                     <div class="gridCell" id="A1"></div>
                     <div class="gridCell" id="A2"></div>
                     <div class="gridCell" id="A3"></div>
@@ -26,7 +27,7 @@
                     <div class="gridCell" id="A8"></div>
                     <div class="gridCell" id="A9"></div>
                     <div class="gridCell" id="A10"></div>
-                    <div class="B"><h4>B</h4></div>
+                    <div class="coordinate"><h4>B</h4></div>
                     <div class="gridCell" id="B1"></div>
                     <div class="gridCell" id="B2"></div>
                     <div class="gridCell" id="B3"></div>
@@ -37,7 +38,7 @@
                     <div class="gridCell" id="B8"></div>
                     <div class="gridCell" id="B9"></div>
                     <div class="gridCell" id="B10"></div>
-                    <div class="C"><h4>C</h4></div>
+                    <div class="coordinate"><h4>C</h4></div>
                     <div class="gridCell" id="C1"></div>
                     <div class="gridCell" id="C2"></div>
                     <div class="gridCell" id="C3"></div>
@@ -48,7 +49,7 @@
                     <div class="gridCell" id="C8"></div>
                     <div class="gridCell" id="C9"></div>
                     <div class="gridCell" id="C10"></div>
-                    <div class="D"><h4>D</h4></div>
+                    <div class="coordinate"><h4>D</h4></div>
                     <div class="gridCell" id="D1"></div>
                     <div class="gridCell" id="D2"></div>
                     <div class="gridCell" id="D3"></div>
@@ -59,7 +60,7 @@
                     <div class="gridCell" id="D8"></div>
                     <div class="gridCell" id="D9"></div>
                     <div class="gridCell" id="D10"></div>
-                    <div class="E"><h4>E</h4></div>
+                    <div class="coordinate"><h4>E</h4></div>
                     <div class="gridCell" id="E1"></div>
                     <div class="gridCell" id="E2"></div>
                     <div class="gridCell" id="E3"></div>
@@ -70,7 +71,7 @@
                     <div class="gridCell" id="E8"></div>
                     <div class="gridCell" id="E9"></div>
                     <div class="gridCell" id="E10"></div>
-                    <div class="F"><h4>F</h4></div>
+                    <div class="coordinate"><h4>F</h4></div>
                     <div class="gridCell" id="F1"></div>
                     <div class="gridCell" id="F2"></div>
                     <div class="gridCell" id="F3"></div>
@@ -81,7 +82,7 @@
                     <div class="gridCell" id="F8"></div>
                     <div class="gridCell" id="F9"></div>
                     <div class="gridCell" id="F10"></div>
-                    <div class="G"><h4>G</h4></div>
+                    <div class="coordinate"><h4>G</h4></div>
                     <div class="gridCell" id="G1"></div>
                     <div class="gridCell" id="G2"></div>
                     <div class="gridCell" id="G3"></div>
@@ -92,7 +93,7 @@
                     <div class="gridCell" id="G8"></div>
                     <div class="gridCell" id="G9"></div>
                     <div class="gridCell" id="G10"></div>
-                    <div class="H"><h4>H</h4></div>
+                    <div class="coordinate"><h4>H</h4></div>
                     <div class="gridCell" id="H1"></div>
                     <div class="gridCell" id="H2"></div>
                     <div class="gridCell" id="H3"></div>
@@ -103,7 +104,7 @@
                     <div class="gridCell" id="H8"></div>
                     <div class="gridCell" id="H9"></div>
                     <div class="gridCell" id="H10"></div>
-                    <div class="I"><h4>I</h4></div>
+                    <div class="coordinate"><h4>I</h4></div>
                     <div class="gridCell" id="I1"></div>
                     <div class="gridCell" id="I2"></div>
                     <div class="gridCell" id="I3"></div>
@@ -114,7 +115,7 @@
                     <div class="gridCell" id="I8"></div>
                     <div class="gridCell" id="I9"></div>
                     <div class="gridCell" id="I10"></div>
-                    <div class="J"><h4>J</h4></div>
+                    <div class="coordinate"><h4>J</h4></div>
                     <div class="gridCell" id="J1"></div>
                     <div class="gridCell" id="J2"></div>
                     <div class="gridCell" id="J3"></div>
@@ -125,36 +126,36 @@
                     <div class="gridCell" id="J8"></div>
                     <div class="gridCell" id="J9"></div>
                     <div class="gridCell" id="J10"></div>
-                    <div class="0"></div>
-                    <div class="1"><h4>1</h4></div>
-                    <div class="2"><h4>2</h4></div>
-                    <div class="3"><h4>3</h4></div>
-                    <div class="4"><h4>4</h4></div>
-                    <div class="5"><h4>5</h4></div>
-                    <div class="6"><h4>6</h4></div>
-                    <div class="7"><h4>7</h4></div>
-                    <div class="8"><h4>8</h4></div>
-                    <div class="9"><h4>9</h4></div>
-                    <div class="10"><h4>10</h4></div>
+                    <div class="coordinate"></div>
+                    <div class="coordinate"><h4>1</h4></div>
+                    <div class="coordinate"><h4>2</h4></div>
+                    <div class="coordinate"><h4>3</h4></div>
+                    <div class="coordinate"><h4>4</h4></div>
+                    <div class="coordinate"><h4>5</h4></div>
+                    <div class="coordinate"><h4>6</h4></div>
+                    <div class="coordinate"><h4>7</h4></div>
+                    <div class="coordinate"><h4>8</h4></div>
+                    <div class="coordinate"><h4>9</h4></div>
+                    <div class="coordinate"><h4>10</h4></div>
                 </div>
             </div>
             <div class="other">
                 <h2>Place ships</h2>
-                <div class="ship" id="ship_4"></div>
-                <div class="ship" id="ship_3"></div>
-                <div class="ship" id="ship_3"></div>
-                <div class="ship" id="ship_2"></div>
-                <div class="ship" id="ship_2"></div>
-                <div class="ship" id="ship_2"></div>
-                <div class="ship" id="ship_1"></div>
-                <div class="ship" id="ship_1"></div>
-                <div class="ship" id="ship_1"></div>
-                <div class="ship" id="ship_1"></div>
-                <button>90</button>
-                <button>Play</button>
+                <div class="ship" id="ship_4_1"></div>
+                <div class="ship" id="ship_3_1"></div>
+                <div class="ship" id="ship_3_2"></div>
+                <div class="ship" id="ship_2_1"></div>
+                <div class="ship" id="ship_2_2"></div>
+                <div class="ship" id="ship_2_3"></div>
+                <div class="ship" id="ship_1_1"></div>
+                <div class="ship" id="ship_1_2"></div>
+                <div class="ship" id="ship_1_3"></div>
+                <div class="ship" id="ship_1_4"></div>
+                <button id="rotate">90</button>
+                <button id="play">Play</button>
             </div>
 
-            <script src="../app.js"></script>
+            <script src="javascript/app.js"></script>
         </main>
         
     </body>
