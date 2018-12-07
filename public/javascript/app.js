@@ -180,13 +180,14 @@ function mouseMove(ev){
 function mouseUp(ev){
 	if(curTarget){
 		dragHelper.style.display = 'none';
-		curTarget.style.display = '';
-    if(lastCell !== null){
+    curTarget.style.display = '';
+    if(!snappable){
       gridCellHoverOut(lastCell);
     }
   }
 	lastTarget  = curTarget;
 	curTarget  = null;
+  lastCell = null;
 	iMouseDown = false;
 }
 function mouseDown(){
