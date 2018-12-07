@@ -163,9 +163,7 @@ function mouseMove(ev){
 					(parseInt(cells[i].getAttribute('x_start')) + 40  > cur_x + 20) &&
 					(parseInt(cells[i].getAttribute('y_start'))  + 40 > cur_y + 20)){
             activeCell = cells[i];
-            if(lastCell !== null){
-                gridCellHoverOut(lastCell);
-            }
+            gridCellHoverOut(lastCell);
             gridCellHoverIn(activeCell);
             lastCell = activeCell;
 						break;
@@ -181,8 +179,17 @@ function mouseUp(ev){
 	if(curTarget){
 		dragHelper.style.display = 'none';
     curTarget.style.display = '';
-    if(!snappable){
-      gridCellHoverOut(lastCell);
+    if (lastCell !== null) {
+      if(!snappable){
+        gridCellHoverOut(lastCell);
+      }
+      else{
+        var parent = curTarget.parentNode;
+        parent.removeChild(curTarget);
+        document.body.appendChild(curTarget);
+        curTarget.style.left = lastCell.getAttribute('x_start') + 'px';
+        curTarget.style.top = lastCell.getAttribute('y_start') + 'px';
+      }
     }
   }
 	lastTarget  = curTarget;
