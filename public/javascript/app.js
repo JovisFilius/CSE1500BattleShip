@@ -80,10 +80,24 @@ var gridCellHoverIn = function(arg){
         cellCoord = String.fromCharCode(yCoord.charCodeAt() + i);
         var cell = document.getElementById(cellCoord+xCoord);
       }
-      if(newBackground === "lightgreen"){
-        cell.setAttribute("occupied", true);
+      if(cell.getAttribute('occupied') === 'true'){
+        newBackground = "tomato";
+        snappable = false;
       }
-      cell.style.backgroundColor = newBackground;
+    }
+
+    for(var i = 0; i<Math.min(curTarget.id.substring(5,6), fieldSize - startCoord + 1); i++){
+      var cellCoord;
+      if(shipOrientation === "horizontal" ){
+        cellCoord = parseInt(xCoord) + i;
+        var cell = document.getElementById(yCoord+cellCoord);
+      }else if(shipOrientation === "vertical"){
+        cellCoord = String.fromCharCode(yCoord.charCodeAt() + i);
+        var cell = document.getElementById(cellCoord+xCoord);
+      }
+      if(cell.getAttribute('occupied') !== 'true'){
+          cell.style.backgroundColor = newBackground;
+      }
     }
   }
 };
@@ -111,8 +125,9 @@ var gridCellHoverOut = function(arg){
         cellCoord = String.fromCharCode(yCoord.charCodeAt() + i);
         cell = document.getElementById(cellCoord+xCoord);
       }
-    cell.setAttribute("occupied", false);
-    cell.style.backgroundColor = newBackground;
+      if(cell.getAttribute("occupied") !== "true"){
+        cell.style.backgroundColor = newBackground;
+      }
     }
     snappable = false;
   }
@@ -163,9 +178,13 @@ function mouseMove(ev){
 					(parseInt(cells[i].getAttribute('x_start')) + 40  > cur_x + 20) &&
 					(parseInt(cells[i].getAttribute('y_start'))  + 40 > cur_y + 20)){
             activeCell = cells[i];
-            gridCellHoverOut(lastCell);
-            gridCellHoverIn(activeCell);
-            lastCell = activeCell;
+            if(lastCell !== activeCell){
+              if(lastCell !== null){
+                gridCellHoverOut(lastCell);
+              }
+              gridCellHoverIn(activeCell);
+              lastCell = activeCell;
+            }
 						break;
 				}
     }
@@ -224,11 +243,19 @@ window.onload = function(){
 //     }
 // }
 // $(".other button").click(function(event){
-//     if(this.id === "rotate"){
-//         toggleShipOrientation();
-//     }
+//     // if(this.id === "rotate"){
+//     //     toggleShipOrientation();
+//     // }
 //     if(this.id === "play"){
 //         console.log("play button clicked (no further implementation yet)");
 //         // gridCellHoverIn(document.getElementById("A1"));
+//         document.getElementById("B4").style.backgroundColor = "purple";
+//         document.getElementById("B5").style.backgroundColor = "purple";
+//         document.getElementById("B6").style.backgroundColor = "purple";
+//         document.getElementById("B7").style.backgroundColor = "purple";
+//         document.getElementById("B4").setAttribute("occupied", "true");
+//         document.getElementById("B5").setAttribute("occupied", "true");
+//         document.getElementById("B6").setAttribute("occupied", "true");
+//         document.getElementById("B7").setAttribute("occupied", "true");
 //     }
 // });
