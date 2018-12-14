@@ -5,14 +5,16 @@
         <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+            <div id="overlay"></div>
+            <div id="playRules"></div>
         <div>
             <header>
                 <h1>Battleship</h1>
                 <img src="logo.png" alt="Image of the site's logo">
             </header>
             <main>
-                <h2><a href="#">Play</a></h2>
-                <h2><a href="#">How to play</a></h2>
+                <h2><a href="./game.html">Play</a></h2>
+                <h2 id="howToPlay" >How to play</h2>
                 <img src="foldaship.png" alt="Image of how to fold a ship">
             </main>
             <footer>
@@ -21,6 +23,8 @@
                 <h3>Stat3</h3>
             </footer>
         </div>
-        <script src="javascripts/app.js"></script>
+        <!-- <script src="javascript/app.js"></script> -->
+        <script src="javascript/socket.js"></script>
+        <script src="javascript/splash.js"></script>
     </body>
 </html>
