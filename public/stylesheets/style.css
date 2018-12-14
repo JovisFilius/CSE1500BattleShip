@@ -82,6 +82,7 @@ main > div {
   background-color: lightblue;
   border-style: solid;
   border-width: 4px;
+  transform-origin: 20px 20px;
 }
 
 #ship_4_1 {
