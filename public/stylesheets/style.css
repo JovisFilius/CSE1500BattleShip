@@ -11,6 +11,65 @@ header {
   width: 1200px;
   margin: auto;
   overflow: auto;
+  /* padding-top: 50px; */
+  /* padding-top: 50px; */
+}
+
+.splashHeader, .splashMain, .splashFooter{
+  overflow: hidden;
+  padding-top: 100px;
+  /* max-height: 280px; */
+}
+
+.splashHeader > h1 {
+  float: left;
+  font-size: 90px;
+  
+  height: 150px;
+}
+
+.splashHeader > img {
+  float: left;
+  padding-left: 200px;
+  /* height: auto; */
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  color: red;
+}
+
+.splashMain > h2 {
+  float: left;
+  /* display: block; */
+  font-size: 64px;
+  /* padding: 15px; */
+  height: 140px;
+  width: 700px;
+  cursor: pointer;
+}
+
+.splashMain > img {
+  float: right;
+  width: 400px;
+  /* position: absolute; */
+  /* right: 0; */
+  /* display: inline; */
+}
+
+footer{
+  width: 1200px;
+  margin: auto;
+  overflow: auto;
+}
+
+.splashFooter > h3 {
+  float: left;
+  width: 350px;
 }
 
 .sound {
@@ -66,7 +125,7 @@ main > div {
 .board > .coordinate {
   width: 40px;
   border-width: 0px;
-  font-size: 28px;
+  font-size: 25px;
   text-align: center;
 }
 
@@ -178,11 +237,13 @@ main > div {
 
 #playRules {
   position: fixed;
+  float: center;
   display: none;
+  left: 30vw;
+  top: 10vh;
   width: 800px;
   height: 600px;
   margin: auto;
-  padding: auto;
   background-color: white;
   z-index: 3;
   cursor: help;
