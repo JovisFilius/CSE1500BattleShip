@@ -9,12 +9,14 @@
     <body>        
         <header>
             <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-            <button class="sound"><img src="sound.png" alt="Image of sound state"></button>
-            <button class="close">x</button>
+            <button class="sound"><img src="./images/soundIcon.png" alt="Image of sound state" id="soundIcon"></button>
+            <form action="/" method="POST">
+            <button class="close" type="submit"><img src="images/close_noBackground_small_square.png" alt="close cross"></button>
+        </form>
         </header>
         <main>
             <div class="player">
-                <img src="player.png" alt="Image of player">
+                <img src="./images/player1_noBackground_small_cutoff.png" alt="Image of player">
                 <h4>You</h4>
                 <div class="board">
                     <div class="coordinate"><h4>A</h4></div>
@@ -152,8 +154,8 @@
                 <div class="ship" id="ship_1_2" x="130" y="340"></div>
                 <div class="ship" id="ship_1_3" x="210" y="340"></div>
                 <div class="ship" id="ship_1_4" x="290" y="340"></div>
-                <button id="rotate">90</button>
-                <button id="play">Play</button>
+                <button id="rotate"><img src="./images/rotate_small.png"><h4>90°</h4></button>
+                <button id="play"><img src="./images/play_small.png"><h4>Play</h4></button>
             </div>
 
             <script src="javascript/app.js"></script>

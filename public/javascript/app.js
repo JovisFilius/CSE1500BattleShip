@@ -16,6 +16,8 @@ var field = null;
 
 var snappable = false;
 
+var soundEnabled = true;
+
 function mouseCoords(ev){
 	if(ev.pageX || ev.pageY){
 		return {x:ev.pageX, y:ev.pageY};
@@ -355,6 +357,15 @@ document.onmousemove = mouseMove;
 document.onmousedown = mouseDown;
 document.onmouseup   = mouseUp;
 document.getElementById('rotate').onclick = buttonClicked;
+document.getElementsByClassName('sound').item(0).onclick = function() {
+  if(soundEnabled){
+    soundEnabled = false;
+    document.getElementById('soundIcon').setAttribute('src', "./images/soundIcon_disabled.png");
+  }else{
+    soundEnabled = true;
+    document.getElementById('soundIcon').setAttribute('src', "./images/soundIcon.png");
+  }
+}
 
 window.onload = function(){
 
