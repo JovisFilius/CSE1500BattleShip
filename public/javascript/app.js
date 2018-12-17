@@ -378,15 +378,22 @@ function playerData(){
   var ships = document.getElementsByClassName('ship');
   for(let i = 0; i < ships.length; i++){
     var ship = ships[i];
+    var ship_id = ships[i].getAttribute('id');
     var shipCell_id = ship.getAttribute('occupies');
     var shipCell = document.getElementById(shipCell_id);
     var shipCells = selectCells(ship, shipCell);
     for(let j = 0; j < shipCells.length; j++){
       data[shipCells[j].getAttribute('id')] = ship.getAttribute('id');
     }
-    data[ship.getAttribute('id')] = shipCells.length;
+    data[ship_id] = [];
+    data[ship_id].push(shipCells.length);
+    var surrounding = selectOCells(ship, shipCell);
+    for(let j = 0; j < surrounding.length; j++){
+      data[ship_id].push("_" + surrounding[j].getAttribute('id'));
+    }
     data['ships'] = ships.length;
   }
+  // console.log(data);
   var dataSend = {};
   dataSend['type'] = 'data';
   dataSend['data'] = data;
@@ -497,6 +504,21 @@ function listen(event){
       if(msg.hit === true){
         var cur = document.getElementById(msg.cell);
         cur.style.backgroundColor = 'lightblue';
+        if(msg.sunk){
+          for(let j = 0; j < msg.sunk.length; j++){
+            cur = document.getElementById(msg.sunk[j]);
+            if(cur.style.backgroundColor !== 'lightblue'){
+              cur.style.backgroundColor = 'lightgray';
+              cur.className = 'shot';
+            }
+          }
+          if(msg.won){
+            document.getElementById('overlay').style.display = 'block';
+            var message = document.getElementById('message');
+            message.style.display = "block";
+            // TODO message on screen !!You won!!
+          }
+        }
       }
       else{
         var cur = document.getElementById(msg.cell.substring(1,msg.cell.length));
@@ -507,6 +529,21 @@ function listen(event){
       if(msg.hit === true){
         var cur = document.getElementById(msg.cell.substring(1,msg.cell.length));
         cur.style.backgroundColor = 'lightblue';
+        if(msg.sunk){
+          for(let j = 0; j < msg.sunk.length; j++){
+            cur = document.getElementById(msg.sunk[j].substring(1,msg.sunk[j].length));
+            if(cur.style.backgroundColor !== 'lightblue'){
+              cur.style.backgroundColor = 'lightgray';
+              cur.className = 'shot';
+            }
+          }
+          if(msg.won){
+            document.getElementById('overlay').style.display = 'block';
+            var message = document.getElementById('message');
+            message.style.display = "block";
+            // TODO message on screen !!You lost!!
+          }
+        }
       }
       else{
         var cur = document.getElementById(msg.cell);
