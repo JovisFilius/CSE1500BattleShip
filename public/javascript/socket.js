@@ -3,10 +3,8 @@ socket.onmessage = function(event){
     console.log(event.data);
 }
 
-if(document.getElementById('play') !== null){
-    document.getElementById('play').onclick = function(event){
-        var playerData = "data containing board positions and player info";
-        socket.send(playerData);
-        console.log('clicked play button, sending data to server');
-    }
+document.getElementById('play').onclick = function(event){
+    var playerData = "data containing board positions and player info";
+    socket.send(playerData);
+    console.log('clicked play button, sending data to server');
 }

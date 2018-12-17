@@ -162,6 +162,37 @@ button.sound, button.close{
   border-style: solid;
   border-width: 4px;
   transform-origin: 20px 20px;
+  transition: transform 1s;
+}
+
+.wiggling {
+  animation: wiggle 0.333s linear infinite;
+}
+
+@keyframes wiggle {
+  from {
+    transform: translate(0px, 0px)
+  }
+
+  20%{
+    transform: translate( -15px, 0px)
+  }
+
+  40%{
+    transform: translate(0px, -10px)
+  }
+
+  60%{
+    transform: translate( 10px, 0px)
+  }
+
+  80%{
+    transform: translate( 0px , 15px)
+  }
+
+  to{
+    transform: translate( 0px, 0px)
+  }
 }
 
 #ship_4_1 {
@@ -233,6 +264,11 @@ button.sound, button.close{
   height: 50px;
   top: 425px;
   left: 50px;
+}
+
+#rotate:disabled {
+  color: gray;
+  background-color: lightgray;
 }
 
 #rotate > img, #play > img {

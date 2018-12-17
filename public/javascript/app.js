@@ -52,7 +52,7 @@ function getMouseOffset(target, ev){
 }
 
 function calculatePositions(e){
-  for(var i = 0; i < e.length; i++) {
+  for(let i = 0; i < e.length; i++) {
     getPosition(e[i]);
   }
 }
@@ -68,7 +68,7 @@ function selectCells(target, cell){
 
   var selectedCells = [];
 
-  for(var i = 0; i < shipSize; i++){
+  for(let i = 0; i < shipSize; i++){
     var cellCoord;
     
     if(shipOrientation === 'horizontal' ){
@@ -96,7 +96,7 @@ function selectOCells(target, cell){
   var selectedCells = [];
 
   for(var j = 0; j < 3; j++){
-    for(var i = 0; i < shipSize + 2; i++){      
+    for(let i = 0; i < shipSize + 2; i++){      
       if(shipOrientation === 'horizontal' ){
         var xTemp = parseInt(xCoord) + i - 1;
         var yTemp = String.fromCharCode(yCoord.charCodeAt() + j - 1);
@@ -289,7 +289,7 @@ function mouseDown(){
 	}
 }
 
-function buttonClicked(){
+function rotateClicked(){
   if(lastSelected !== null){
     if(lastSelected.getAttribute('occupies') !== null){
 
@@ -337,14 +337,18 @@ function buttonClicked(){
         else shipOrientation = 'horizontal';
         lastSelected.setAttribute('shipOrientation', shipOrientation);
 
+        lastSelected.className += ' wiggling';
+        console.log(lastSelected.className);
+        setTimeout(function(){lastSelected.className = 'ship'}, 600);
+
         for(let i = 0; i < oldCells.length; i++){
           var temp = oldCells[i].getAttribute('occupied');
           temp++;
           oldCells[i].setAttribute('occupied', temp);
 
-          for(let j = 0; j < 1000; j = j + 300) {
+          for(let j = 0; j < 600; j = j + 200) {
             setTimeout(function(){document.getElementById('rotate').style.background = 'tomato'},j);
-            setTimeout(function(){document.getElementById('rotate').style.background = ''}, j + 150);
+            setTimeout(function(){document.getElementById('rotate').style.background = ''}, j + 100);
           }
         }
       }
@@ -353,11 +357,7 @@ function buttonClicked(){
   } else console.log('No ship is yet selected!');
 }
 
-document.onmousemove = mouseMove;
-document.onmousedown = mouseDown;
-document.onmouseup   = mouseUp;
-document.getElementById('rotate').onclick = buttonClicked;
-document.getElementsByClassName('sound').item(0).onclick = function() {
+function soundSetting(){
   if(soundEnabled){
     soundEnabled = false;
     document.getElementById('soundIcon').setAttribute('src', "./images/soundIcon_disabled.png");
@@ -367,6 +367,13 @@ document.getElementsByClassName('sound').item(0).onclick = function() {
   }
 }
 
+document.onmousemove = mouseMove;
+document.onmousedown = mouseDown;
+document.onmouseup   = mouseUp;
+document.getElementById('rotate').onclick = rotateClicked;
+document.getElementById('play').onclick = playClicked;
+document.getElementsByClassName('sound').item(0).onclick = soundSetting;
+
 window.onload = function(){
 
   dragHelper = document.createElement('DIV');
@@ -374,4 +381,55 @@ window.onload = function(){
   gridCells = document.getElementsByClassName('gridCell');
   base = document.getElementsByClassName('other')[0];
   field = document.getElementsByClassName('player')[0];
+}
+
+function playerData(){
+  var data = [];
+  var ships = document.getElementsByClassName('ship');
+  for(let i = 0; i < ships.length; i++){
+    var ship = ships[i];
+    var shipCell_id = ship.getAttribute('occupies');
+    var shipCell = document.getElementById(shipCell_id);
+    var shipCells = selectCells(ship, shipCell);
+    for(let j = 0; j < shipCells.length; j++){
+      data[shipCells[j].getAttribute('id')] = ship.getAttribute('id');
+    }
+    data[ship.getAttribute('id')] = shipCells.length;
+  }
+  return data;
+}
+
+var socket = new WebSocket("ws://localhost:4444");
+socket.onmessage = function(event){
+    console.log(event.data);
+}
+
+function disableShipMovement(){
+  lastSelected.style.border = '4px solid black';
+  lastSelected = null;
+  document.onmousemove = null;
+  document.onmousedown = null;
+  document.onmouseup   = null;
+  document.getElementById('rotate').onclick = null;
+  document.getElementById('rotate').setAttribute('disabled', 'true');
+}
+
+function playClicked(){
+
+  if(document.getElementsByClassName('other')[0].getElementsByClassName('ship').length === 0){
+    disableShipMovement();
+    var data = playerData();
+    socket.send(data);
+    console.log('clicked play button, sending data to server');
+  }
+  else{
+
+    for(let j = 0; j < 1000; j = j + 300) {
+      setTimeout(function(){document.getElementById('play').style.background = 'tomato'},j);
+      setTimeout(function(){document.getElementById('play').style.background = ''}, j + 150);
+    }
+
+    console.log('First place all ships!');
+  }
+
 }
