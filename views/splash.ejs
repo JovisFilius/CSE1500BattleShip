@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Battleship - CSE3.03</title>
+        <link href="stylesheets/reset.css" rel="stylesheet" type="text/css">
+        <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+    </head>
+    <body>
+            <div id="overlay"></div>
+            <div id="playRules">
+                <h1>How To Play:</h1>
+                
+                    <h2>Place your ships.</h2>
+                    <h2>Wait for your opponent to be ready.</h2>
+                    <h2>Shoot all of the opponent's ships, before yours are shot.</h2>
+                    <h2>When you hit a ship, you may shoot again.</h2>
+                
+            </div>
+        <div>
+            <header class="splashHeader">
+                <h1>Battleship</h1>
+                <img src="./images/logo.png" alt="Image of the site's logo">
+            </header>
+            <main class="splashMain">
+                <h2><a href="./game.html">Play</a></h2>
+                <h2 id="howToPlay" ><a>How to play</a></h2>
+                <img src="./images/bootjevouwen.png" alt="Image of how to fold a ship">
+            </main>
+            <footer class="splashFooter">
+                <h3 id='stat1'>Games Initialized: <%= gamesInitialized %></h3>
+                <h3 id='stat2'>Games Aborted: <%= gamesAborted %></h3>
+                <h3 id='stat3'>Games Completed: <%= gamesCompleted %></h3>
+            </footer>
+        </div>
+        <script src="javascript/splash.js"></script>
+    </body>
+</html>

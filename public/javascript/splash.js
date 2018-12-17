@@ -5,7 +5,6 @@ document.getElementById('overlay').onclick = off;
 function on() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("playRules").style.display = "block";
-    document.getElementById("playRules").style.backgroundColor = 'cyan';
     // console.log('should be black now');
   }
   

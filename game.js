@@ -11,14 +11,14 @@ var game = function (gameID) {
 
 game.prototype.addPlayer = function (p) {
 
-    if(this.gameState = "0 JOINT"){
+    if(this.gameState === "0 JOINT"){
         this.gameState = "1 JOINT";
     }
     else{
         this.gameState = "2 JOINT";
     }
 
-    if (this.playerA == null) {
+    if (this.playerA === null) {
         this.playerA = p;
         return "A";
     }

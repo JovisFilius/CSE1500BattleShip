@@ -18,6 +18,10 @@ var snappable = false;
 
 var soundEnabled = true;
 
+var socket = null;
+var player = null;
+var turn = null;
+
 function mouseCoords(ev){
 	if(ev.pageX || ev.pageY){
 		return {x:ev.pageX, y:ev.pageY};
@@ -370,8 +374,7 @@ function disableShipMovement(){
 }
 
 function playerData(){
-  var data = [];
-  data['type'] = 'data';
+  var data = {};
   var ships = document.getElementsByClassName('ship');
   for(let i = 0; i < ships.length; i++){
     var ship = ships[i];
@@ -384,16 +387,26 @@ function playerData(){
     data[ship.getAttribute('id')] = shipCells.length;
     data['ships'] = ships.length;
   }
-  return data;
+  var dataSend = {};
+  dataSend['type'] = 'data';
+  dataSend['data'] = data;
+  return dataSend;
 }
 
 function playClicked(){
 
   if(document.getElementsByClassName('other')[0].getElementsByClassName('ship').length === 0){
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('waiting').style.display = "block";
     disableShipMovement();
     var data = playerData();
-    socket.send(JSON.stringify(data));
-    console.log('clicked play button, sending data to server');
+    socket = new WebSocket("ws://localhost:4444");
+    socket.onopen = function(event){
+      // socket.send(JSON.stringify(data));
+      console.table(data);
+      console.log('clicked play button, sending data to server');
+    }
+    socket.onmessage = listen;
   }
   else{
 
@@ -428,9 +441,9 @@ window.onload = function(){
 
   dragHelper = document.createElement('DIV');
   dragHelper.style.cssText = 'position:absolute;display:none;';
-  gridCells = document.getElementsByClassName('gridCell');
-  base = document.getElementsByClassName('other')[0];
   field = document.getElementsByClassName('player')[0];
+  gridCells = field.getElementsByClassName('gridCell');
+  base = document.getElementsByClassName('other')[0];
 }
 
 
@@ -439,29 +452,46 @@ window.onload = function(){
 
 
 
-var socket = new WebSocket("ws://localhost:4444");
-var player = null;
-var turn = null;
+var playfield = document.getElementsByClassName('player2')[0];
+var clickedGridCells = playfield.getElementsByClassName('gridCell');
 
-socket.onmessage = function(event){
+function clickedGridCell_disable(){
+
+  for(let i = 0; i < clickedGridCells.length; i++){
+    clickedGridCells[i].onclick = null;
+  }
+
+}
+
+function clickedGridCell(){
+
+  for(let i = 0; i < clickedGridCells.length; i++){
+    clickedGridCells[i].onclick = function(){
+      console.log(clickedGridcells[i].getAttribute('id'));
+    }
+  }
+
+}
+
+
+
+
+
+
+function listen(event){
 
   let msg = JSON.parse(event.data);
-
-  if(msg.type === 'GameStats'){
-    document.getElementById('stat1').innerHTML = 'Games Initialized: '+msg.gamesInitialized;
-    document.getElementById('stat2').innerHTML = 'Games Aborted: '+msg.gamesAborted;
-    document.getElementById('stat3').innerHTML = 'Games Completed: '+msg.gamesCompleted;
-  }
 
   if(msg.type === 'start'){
     player = msg.player;
     turn = msg.turn;
-    document.getElementsByClassName('other').item(0).setAttribute('hidden' , 'true');
+    document.getElementsByClassName('other').item(0).setAttribute('hidden', 'true');
     document.getElementsByClassName('player2').item(0).removeAttribute('hidden');
+    document.getElementById('overlay').style.display = "none";
+    document.getElementById('waiting').style.display = "none";
   }
 
-  if(turn === player){
-
-  }
+  if(turn === player) clickedGridCell();
+  else clickedGridCell_disable();
 
 }
