@@ -395,13 +395,26 @@ function playerData(){
       data[shipCells[j].getAttribute('id')] = ship.getAttribute('id');
     }
     data[ship.getAttribute('id')] = shipCells.length;
+    data['ships'] = ships.length;
   }
   return data;
 }
 
 var socket = new WebSocket("ws://localhost:4444");
+var player = null;
+var turn = null;
 socket.onmessage = function(event){
-    console.log(event.data);
+  let msg = JSON.parse(event.data);
+
+  if(msg.type === "start"){
+    player = msg.player;
+    turn = msg.turn;
+  }
+
+  if(turn === player){
+    
+  }
+
 }
 
 function disableShipMovement(){
