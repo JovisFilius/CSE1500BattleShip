@@ -357,6 +357,56 @@ function rotateClicked(){
   } else console.log('No ship is yet selected!');
 }
 
+function disableShipMovement(){
+  lastSelected.style.border = '4px solid black';
+  lastSelected = null;
+  document.onmousemove = null;
+  document.onmousedown = null;
+  document.onmouseup   = null;
+  document.getElementById('rotate').onclick = null;
+  document.getElementById('rotate').setAttribute('disabled', 'true');
+  document.getElementById('play').onclick = null;
+  document.getElementById('play').setAttribute('disabled', 'true');
+}
+
+function playerData(){
+  var data = [];
+  data['type'] = 'data';
+  var ships = document.getElementsByClassName('ship');
+  for(let i = 0; i < ships.length; i++){
+    var ship = ships[i];
+    var shipCell_id = ship.getAttribute('occupies');
+    var shipCell = document.getElementById(shipCell_id);
+    var shipCells = selectCells(ship, shipCell);
+    for(let j = 0; j < shipCells.length; j++){
+      data[shipCells[j].getAttribute('id')] = ship.getAttribute('id');
+    }
+    data[ship.getAttribute('id')] = shipCells.length;
+    data['ships'] = ships.length;
+  }
+  return data;
+}
+
+function playClicked(){
+
+  if(document.getElementsByClassName('other')[0].getElementsByClassName('ship').length === 0){
+    disableShipMovement();
+    var data = playerData();
+    socket.send(JSON.stringify(data));
+    console.log('clicked play button, sending data to server');
+  }
+  else{
+
+    for(let j = 0; j < 1000; j = j + 300) {
+      setTimeout(function(){document.getElementById('play').style.background = 'tomato'},j);
+      setTimeout(function(){document.getElementById('play').style.background = ''}, j + 150);
+    }
+
+    console.log('First place all ships!');
+  }
+
+}
+
 function soundSetting(){
   if(soundEnabled){
     soundEnabled = false;
@@ -383,30 +433,27 @@ window.onload = function(){
   field = document.getElementsByClassName('player')[0];
 }
 
-function playerData(){
-  var data = [];
-  var ships = document.getElementsByClassName('ship');
-  for(let i = 0; i < ships.length; i++){
-    var ship = ships[i];
-    var shipCell_id = ship.getAttribute('occupies');
-    var shipCell = document.getElementById(shipCell_id);
-    var shipCells = selectCells(ship, shipCell);
-    for(let j = 0; j < shipCells.length; j++){
-      data[shipCells[j].getAttribute('id')] = ship.getAttribute('id');
-    }
-    data[ship.getAttribute('id')] = shipCells.length;
-    data['ships'] = ships.length;
-  }
-  return data;
-}
+
+
+
+
+
 
 var socket = new WebSocket("ws://localhost:4444");
 var player = null;
 var turn = null;
+
 socket.onmessage = function(event){
+
   let msg = JSON.parse(event.data);
 
-  if(msg.type === "start"){
+  if(msg.type === 'GameStats'){
+    document.getElementById('stat1').innerHTML = 'Games Initialized: '+msg.gamesInitialized;
+    document.getElementById('stat2').innerHTML = 'Games Aborted: '+msg.gamesAborted;
+    document.getElementById('stat3').innerHTML = 'Games Completed: '+msg.gamesCompleted;
+  }
+
+  if(msg.type === 'start'){
     player = msg.player;
     turn = msg.turn;
     document.getElementsByClassName('other').item(0).setAttribute('hidden' , 'true');
@@ -415,36 +462,6 @@ socket.onmessage = function(event){
 
   if(turn === player){
 
-  }
-
-}
-
-function disableShipMovement(){
-  lastSelected.style.border = '4px solid black';
-  lastSelected = null;
-  document.onmousemove = null;
-  document.onmousedown = null;
-  document.onmouseup   = null;
-  document.getElementById('rotate').onclick = null;
-  document.getElementById('rotate').setAttribute('disabled', 'true');
-}
-
-function playClicked(){
-
-  if(document.getElementsByClassName('other')[0].getElementsByClassName('ship').length === 0){
-    disableShipMovement();
-    var data = playerData();
-    socket.send(data);
-    console.log('clicked play button, sending data to server');
-  }
-  else{
-
-    for(let j = 0; j < 1000; j = j + 300) {
-      setTimeout(function(){document.getElementById('play').style.background = 'tomato'},j);
-      setTimeout(function(){document.getElementById('play').style.background = ''}, j + 150);
-    }
-
-    console.log('First place all ships!');
   }
 
 }

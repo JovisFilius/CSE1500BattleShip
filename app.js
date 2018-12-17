@@ -35,32 +35,28 @@ var connectionID = 0;
 
 
 wss.on("connection", function connection(ws) {
-    // console.log('Greeting the player');
-    // ws.send("Hello player");
+
     ws.send(JSON.stringify(gameStats));
+
     ws.on('message', function incoming(message) {
 
-    let con = ws;
-    con.id = connectionID++;
-    let playerType = currentGame.addPlayer(con);
-    websockets[con.id] = currentGame;
+        let con = ws;
+        con.id = connectionID++;
+        let playerType = currentGame.addPlayer(con);
+        websockets[con.id] = currentGame;
 
-    if (currentGame.gameState == "2 JOINT") {
-        var start_A = {type: start, turn: 'A', player: 'A'};
-        var start_B = {type: start, turn: 'A', player: 'B'};
-        currentGame.gameState = "A";
-        currentGame.playerA.send(JSON.stringify(start_A));
-        currentGame.playerB.send(JSON.stringify(start_B));
-        currentGame = new Game(gameStatus.gamesInitialized++);
-    }
+        if (currentGame.gameState == "2 JOINT") {
+            var start_A = {type: 'start', turn: 'A', player: 'A'};
+            var start_B = {type: 'start', turn: 'A', player: 'B'};
+            currentGame.gameState = "A";
+            currentGame.playerA.send(JSON.stringify(start_A));
+            currentGame.playerB.send(JSON.stringify(start_B));
+            currentGame = new Game(gameStatus.gamesInitialized++);
+        }
 
+        
+    });
 
-
-    // ws.send("Hello player");
-    // ws.on('message', function incoming(message) {
-
-    //     console.log('received message from client: %s', message);
-    // })
 })
 
 
