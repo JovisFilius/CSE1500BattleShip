@@ -35,6 +35,10 @@ var connectionID = 0;
 
 
 wss.on("connection", function connection(ws) {
+    // console.log('Greeting the player');
+    // ws.send("Hello player");
+    ws.send(JSON.stringify(gameStats));
+    ws.on('message', function incoming(message) {
 
     let con = ws;
     con.id = connectionID++;

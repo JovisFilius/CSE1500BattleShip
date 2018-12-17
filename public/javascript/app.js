@@ -433,6 +433,8 @@ function playClicked(){
     disableShipMovement();
     var data = playerData();
     socket.send(data);
+    document.getElementsByClassName('other').item(0).setAttribute('hidden' , 'true');
+    document.getElementsByClassName('player2').item(0).removeAttribute('hidden');
     console.log('clicked play button, sending data to server');
   }
   else{
