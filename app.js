@@ -11,9 +11,13 @@ var port  = process.argv[2];
 var app = express();
 
 app.use(express.static(__dirname + "/public"));
-// app.get('/', indexRouter);
-// app.post('/', indexRouter);
 app.get('/', function(req, res){
+    res.render('splash.ejs', {gamesInitialized: gameStats.gamesInitialized,
+    gamesAborted: gameStats.gamesAborted,
+    gamesCompleted: gameStats.gamesCompleted});
+});
+
+app.post('/', function(req, res){
     res.render('splash.ejs', {gamesInitialized: gameStats.gamesInitialized,
     gamesAborted: gameStats.gamesAborted,
     gamesCompleted: gameStats.gamesCompleted});
@@ -58,10 +62,65 @@ wss.on("connection", function connection(ws) {
 
     ws.on('message', function incoming(message) {
         
-        let msg = JSON.parse(message.data);
+        let msg = JSON.parse(message);
 
-        if(msg.type === 'data' && websockets[con.id].playerA === con) websockets[con.id].dataA = msg.data;
-        else websockets[con.id].dataB = msg.data;
+        // console.log(msg);   
+
+        if(msg.type === 'data') {
+            if(websockets[con.id].playerA === con){
+                websockets[con.id].dataA = msg.data;
+            }
+            else websockets[con.id].dataB = msg.data;
+        } 
+        
+
+        if(msg.type === 'shot') {
+            var data = {};
+            if((msg.player) === 'A') {
+                if(websockets[con.id].dataB[msg.cell.substring(1,3)]){
+                    console.log('hit');
+                    data['hit'] = true;
+                    data['turn'] = 'A';
+                    websockets[con.id].dataB[websockets[con.id].dataB[msg.cell.substring(1,msg.cell.length)]]--;
+                    if(websockets[con.id].dataB[websockets[con.id].dataB[msg.cell.substring(1,msg.cell.length)]] === 0){
+                        websockets[con.id].dataB['ships']--;
+                        console.log('Ship shunk!');
+                        if (websockets[con.id].dataB['ships'] === 0){
+                            console.log('Player A wins');
+                        };
+                    }
+                }
+                else{
+                    console.log('mis');
+                    data['hit'] = false;
+                    data['turn'] = 'B'; 
+                }
+            }
+            else{
+                if(websockets[con.id].dataA[msg.cell.substring(1,3)]){
+                    console.log('hit');
+                    data['hit'] = true;
+                    data['turn'] = 'B'; 
+                    websockets[con.id].dataA[websockets[con.id].dataA[msg.cell.substring(1,msg.cell.length)]]--;
+                    if(websockets[con.id].dataA[websockets[con.id].dataA[msg.cell.substring(1,msg.cell.length)]] === 0){
+                        websockets[con.id].dataA['ships']--;
+                        console.log('Ship shunk!');
+                        if (websockets[con.id].dataA['ships'] === 0){
+                            console.log('Player B wins');
+                        };
+                    }
+                }
+                else{
+                    console.log('mis');
+                    data['hit'] = false;
+                    data['turn'] = 'A'; 
+                }
+            }
+            data['type'] = 'shot';
+            data['cell'] = msg.cell;
+            websockets[con.id].playerA.send(JSON.stringify(data));
+            websockets[con.id].playerB.send(JSON.stringify(data));
+        }
         
     });
 

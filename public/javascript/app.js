@@ -342,7 +342,7 @@ function rotateClicked(){
         lastSelected.setAttribute('shipOrientation', shipOrientation);
 
         lastSelected.className += ' wiggling';
-        console.log(lastSelected.className);
+        // console.log(lastSelected.className);
         setTimeout(function(){lastSelected.className = 'ship'}, 600);
 
         for(let i = 0; i < oldCells.length; i++){
@@ -397,13 +397,12 @@ function playClicked(){
 
   if(document.getElementsByClassName('other')[0].getElementsByClassName('ship').length === 0){
     document.getElementById('overlay').style.display = 'block';
-    document.getElementById('waiting').style.display = "block";
+    document.getElementById('message').style.display = "block";
     disableShipMovement();
     var data = playerData();
     socket = new WebSocket("ws://localhost:4444");
     socket.onopen = function(event){
-      // socket.send(JSON.stringify(data));
-      console.table(data);
+      socket.send(JSON.stringify(data));
       console.log('clicked play button, sending data to server');
     }
     socket.onmessage = listen;
@@ -442,7 +441,7 @@ window.onload = function(){
   dragHelper = document.createElement('DIV');
   dragHelper.style.cssText = 'position:absolute;display:none;';
   field = document.getElementsByClassName('player')[0];
-  gridCells = field.getElementsByClassName('gridCell');
+  gridCells = document.getElementsByClassName('gridCell');
   base = document.getElementsByClassName('other')[0];
 }
 
@@ -452,22 +451,24 @@ window.onload = function(){
 
 
 
-var playfield = document.getElementsByClassName('player2')[0];
-var clickedGridCells = playfield.getElementsByClassName('gridCell');
-
-function clickedGridCell_disable(){
+function clickedGridCell_disable(clickedGridCells){
 
   for(let i = 0; i < clickedGridCells.length; i++){
     clickedGridCells[i].onclick = null;
+    clickedGridCells[i].setAttribute('shadow', 'd');
   }
 
 }
 
-function clickedGridCell(){
+function clickedGridCell(clickedGridCells){
 
   for(let i = 0; i < clickedGridCells.length; i++){
+    clickedGridCells[i].setAttribute('shadow', 'a');
     clickedGridCells[i].onclick = function(){
-      console.log(clickedGridcells[i].getAttribute('id'));
+      if(this.className !== 'shot'){
+      socket.send(JSON.stringify({type: 'shot', player: player, cell: this.getAttribute('id')}));
+      }
+      this.className = 'shot';
     }
   }
 
@@ -488,10 +489,40 @@ function listen(event){
     document.getElementsByClassName('other').item(0).setAttribute('hidden', 'true');
     document.getElementsByClassName('player2').item(0).removeAttribute('hidden');
     document.getElementById('overlay').style.display = "none";
-    document.getElementById('waiting').style.display = "none";
+    document.getElementById('message').style.display = "none";
   }
 
-  if(turn === player) clickedGridCell();
-  else clickedGridCell_disable();
+  if(msg.type === 'shot'){
+    if(msg.turn === player){
+      if(msg.hit === true){
+        var cur = document.getElementById(msg.cell);
+        cur.style.backgroundColor = 'lightblue';
+      }
+      else{
+        var cur = document.getElementById(msg.cell.substring(1,msg.cell.length));
+        cur.style.backgroundColor = 'lightgray';
+      }
+    }
+    else{
+      if(msg.hit === true){
+        var cur = document.getElementById(msg.cell.substring(1,msg.cell.length));
+        cur.style.backgroundColor = 'lightblue';
+      }
+      else{
+        var cur = document.getElementById(msg.cell);
+        cur.style.backgroundColor = 'lightgray';
+      }
+    }
+    turn = msg.turn;
+  }
+
+  if(turn === player) {
+    var clickedGridCells = document.getElementsByClassName('_gridCell');
+    clickedGridCell(clickedGridCells);
+  }
+  else {
+    var clickedGridCells = document.getElementsByClassName('_gridCell');
+    clickedGridCell_disable(clickedGridCells);
+  }
 
 }

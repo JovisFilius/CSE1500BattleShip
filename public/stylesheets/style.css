@@ -157,6 +157,10 @@ button.sound, button.close{
   font-size: 250%;
 }
 
+._gridCell[shadow="a"]:hover {
+  background-color: yellow;
+}
+
 .ship {
   position: absolute;
   height: 34px;
@@ -169,7 +173,7 @@ button.sound, button.close{
 }
 
 .wiggling {
-  animation: wiggle 0.333s linear infinite;
+  animation: wiggle 0.3s linear infinite;
 }
 
 @keyframes wiggle {
@@ -304,7 +308,7 @@ button.sound, button.close{
   cursor: pointer;
 }
 
-#waiting {
+#message {
   position: fixed;
   float: center;
   display: none;
@@ -316,7 +320,7 @@ button.sound, button.close{
   z-index: 3;
 }
 
-#playRules > h1, #waiting > h1 {
+#playRules > h1, #message > h1 {
   font-size: 300%;
   padding: 25px;
   margin: auto;

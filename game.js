@@ -1,7 +1,5 @@
 var game = function (gameID) {
     this.id = gameID;
-    this.conA = null;
-    this.conB = null;
     this.playerA = null;
     this.playerB = null;
     this.dataA = null;
