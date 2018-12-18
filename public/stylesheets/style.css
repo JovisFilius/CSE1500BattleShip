@@ -1,4 +1,5 @@
-body {  
+body {
+  text-align: center;
   background-size: 40px 40px;
   background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
 }
@@ -16,28 +17,26 @@ header {
   width: 1200px;
   margin: auto;
   overflow: auto;
-  /* padding-top: 50px; */
-  /* padding-top: 50px; */
 }
 
 .splashHeader, .splashMain, .splashFooter{
+  position: relative;
   overflow: hidden;
   padding-top: 100px;
-  height: auto;
-  /* max-height: 280px; */
+}
+
+.splashHeader{
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .splashHeader > h1 {
-  float: left;
+  display: inline;
   font-size: 90px;
-  
-  height: 150px;
 }
 
 .splashHeader > img {
-  float: left;
-  padding-left: 200px;
-  /* height: auto; */
+  display: inline;
 }
 
 a {
@@ -49,27 +48,23 @@ a:hover {
   color: red;
 }
 
+.splashMain {
+  height: 400px;
+}
+
 .splashMain > h2 {
-  float: left;
-  /* display: block; */
   font-size: 64px;
-  /* padding: 15px; */
   height: 140px;
   width: 650px;
   cursor: pointer;
 }
 
 .splashMain > img {
-  float: right;
-  width: 380px;
-  height: auto;
   position: absolute;
-  top: 300px;
-  left: 900px;
+  left: 700px;
+  top: 100px;
+  width: 380px;
   transform: rotate(-20deg);
-  /* position: absolute; */
-  /* right: 0; */
-  /* display: inline; */
 }
 
 footer{
@@ -84,23 +79,24 @@ footer{
   font-size: 120%;
 }
 
+button.sound, button.close{
+  background: none;
+  border: none;
+  margin: 25px;
+  height: 56px;
+}
+
 .sound {
   float: left;
-  margin: 25px;
 }
 
 .close {
   float: right;
-  margin: 20px;
-  font-size: 20px;
 }
 
 main {
   width: 1200px;
-  height: 650px;
   margin: auto;
-  /* overflow: auto; */
-  overflow: hidden;
 }
 
 main > div {
@@ -111,28 +107,30 @@ main > div {
   position: relative;
 }
 
-button.sound, button.close{
-  background: none;
-  border: none;
-  height: 56px;
-}
-
 .player >  img, .player2 > img {
-  float: left;
-  /* margin: 20px; */
-  margin-left: 200px;
+  position: absolute;
+  left: 184px;
+  top: 10px;
+  z-index: -1;
 }
 
 .player > h4, .player2 > h4 {
+  position: absolute;
+  left: 315px;
+  top: 20px;
   font-size: 150%;
-  float: left;
-  margin: 20px;
 }
 
 .board {
+  position: absolute;
+  top: 84px;
   width: 440px;
   margin: auto;
   overflow: auto;
+}
+
+.gridCell, ._gridCell {
+  background-color: white;
 }
 
 .board > div {
@@ -151,10 +149,7 @@ button.sound, button.close{
 }
 
 .other > h2 {
-  position: absolute;
-  top: 35px;
-  left: 180px;
-  font-size: 250%;
+  font-size: 300%;
 }
 
 ._gridCell[shadow="a"]:hover {
@@ -299,10 +294,6 @@ button.sound, button.close{
   display: none;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: rgba(0,0,0,0.5);
   z-index: 2;
   cursor: pointer;
@@ -310,10 +301,11 @@ button.sound, button.close{
 
 #message {
   position: fixed;
-  float: center;
   display: none;
-  left: 30vw;
-  top: 40vh;
+  left: 50%;
+  top: 50%;
+  margin-left: -385px;
+  margin-top: -50px;
   width: 770px;
   height: 100px;
   background-color: lightgray;
@@ -323,13 +315,9 @@ button.sound, button.close{
 #playRules > h1, #message > h1 {
   font-size: 300%;
   padding: 25px;
-  margin: auto;
-  float: left;
 }
 
 #playRules > h2 {
-  float: left;
-  width: 600px;
   padding-left: 40px;
   padding-top: 40px;
   font-size: 150%;
@@ -337,13 +325,13 @@ button.sound, button.close{
 
 #playRules {
   position: fixed;
-  float: center;
   display: none;
-  left: 30vw;
-  top: 10vh;
+  left: 50%;
+  top: 50%;
+  margin-left: -400px;
+  margin-top: -200px;
   width: 800px;
   height: 400px;
-  margin: auto;
   background-color: lightgray;
   z-index: 3;
   cursor: help;

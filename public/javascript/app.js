@@ -436,12 +436,20 @@ function soundSetting(){
   }
 }
 
+function closeGame(){
+  if(socket){
+    socket.send(JSON.stringify({type: 'stop', player: player}));
+    socket.close();
+  }
+}
+
 document.onmousemove = mouseMove;
 document.onmousedown = mouseDown;
 document.onmouseup   = mouseUp;
 document.getElementById('rotate').onclick = rotateClicked;
 document.getElementById('play').onclick = playClicked;
-document.getElementsByClassName('sound').item(0).onclick = soundSetting;
+document.getElementsByClassName('sound')[0].onclick = soundSetting;
+document.getElementsByClassName('close')[0].onclick = closeGame;
 
 window.onload = function(){
 
@@ -457,6 +465,124 @@ window.onload = function(){
 
 
 
+
+
+
+function listen(event){
+
+  let msg = JSON.parse(event.data);
+
+  if(msg.type === 'start'){
+    player = msg.player;
+    turn = msg.turn;
+    document.getElementsByClassName('other').item(0).setAttribute('hidden', 'true');
+    document.getElementsByClassName('player2').item(0).removeAttribute('hidden');
+    document.getElementById('overlay').style.display = "none";
+    document.getElementById('message').style.display = "none";
+  }
+
+  if(msg.type === 'stop'){
+    document.getElementById('overlay').style.display = 'block';
+    var message = document.getElementById('message');
+    message.style.display = "block";
+    message.innerHTML = "<h1>Opponent left match!</h1>";
+    message.onclick = function () {
+      var form = document.createElement("FORM");
+      form.method = "POST";
+      form.style.display = "none";
+      form.action = "/";
+      document.body.appendChild(form);
+      form.submit();
+    }
+    socket.close();
+  }
+
+  if(msg.type === 'shot'){
+    if(msg.turn === player){
+      if(msg.hit === true){
+        var cur = document.getElementById(msg.cell);
+        cur.style.backgroundColor = 'lightblue';
+        if(msg.sunk){
+          for(let j = 0; j < msg.sunk.length; j++){
+            cur = document.getElementById(msg.sunk[j]);
+            if(cur.style.backgroundColor !== 'lightblue'){
+              cur.style.backgroundColor = 'lightgray';
+              cur.className = 'shot';
+            }
+          }
+          if(msg.won){
+            document.getElementById('overlay').style.display = 'block';
+            var message = document.getElementById('message');
+            message.style.display = "block";
+            message.innerHTML = "<h1>You Won!</h1>";
+            message.onclick = function () {
+              var form = document.createElement("FORM");
+              form.method = "POST";
+              form.style.display = "none";
+              form.action = "/";
+              document.body.appendChild(form);
+              form.submit();
+            }
+            socket.close();
+          }
+        }
+      }
+      else{
+        var cur = document.getElementById(msg.cell.substring(1,msg.cell.length));
+        cur.style.backgroundColor = 'lightgray';
+      }
+    }
+    else{
+      if(msg.hit === true){
+        var cur = document.getElementById(msg.cell.substring(1,msg.cell.length));
+        cur.style.backgroundColor = 'red';
+        if(msg.sunk){
+          for(let j = 0; j < msg.sunk.length; j++){
+            cur = document.getElementById(msg.sunk[j].substring(1,msg.sunk[j].length));
+            if(cur.style.backgroundColor !== 'red'){
+              cur.style.backgroundColor = 'lightgray';
+              cur.className = 'shot';
+            }
+          }
+          if(msg.won){
+            document.getElementById('overlay').style.display = 'block';
+            var message = document.getElementById('message');
+            message.style.display = "block";
+            message.innerHTML = "<h1>You Lost!</h1>";
+            message.onclick = function () {
+              var form = document.createElement("FORM");
+              form.method = "POST";
+              form.style.display = "none";
+              form.action = "/";
+              document.body.appendChild(form);
+              form.submit();
+            }
+            socket.close();
+          }
+        }
+      }
+      else{
+        var cur = document.getElementById(msg.cell);
+        cur.style.backgroundColor = 'lightgray';
+      }
+    }
+    turn = msg.turn;
+  }
+
+  if(turn === player) {
+    document.getElementById("you").src = "./images/player1_noBackground_small_cutoff.png";
+    document.getElementById("opp").src = "./images/player2_noBackground_small_cutoff.png";
+    var clickedGridCells = document.getElementsByClassName('_gridCell');
+    clickedGridCell(clickedGridCells);
+  }
+  else {
+    document.getElementById("you").src = "./images/player2_noBackground_small_cutoff.png";
+    document.getElementById("opp").src = "./images/player1_noBackground_small_cutoff.png";
+    var clickedGridCells = document.getElementsByClassName('_gridCell');
+    clickedGridCell_disable(clickedGridCells);
+  }
+
+}
 
 function clickedGridCell_disable(clickedGridCells){
 
@@ -477,89 +603,6 @@ function clickedGridCell(clickedGridCells){
       }
       this.className = 'shot';
     }
-  }
-
-}
-
-
-
-
-
-
-function listen(event){
-
-  let msg = JSON.parse(event.data);
-
-  if(msg.type === 'start'){
-    player = msg.player;
-    turn = msg.turn;
-    document.getElementsByClassName('other').item(0).setAttribute('hidden', 'true');
-    document.getElementsByClassName('player2').item(0).removeAttribute('hidden');
-    document.getElementById('overlay').style.display = "none";
-    document.getElementById('message').style.display = "none";
-  }
-
-  if(msg.type === 'shot'){
-    if(msg.turn === player){
-      if(msg.hit === true){
-        var cur = document.getElementById(msg.cell);
-        cur.style.backgroundColor = 'lightblue';
-        if(msg.sunk){
-          for(let j = 0; j < msg.sunk.length; j++){
-            cur = document.getElementById(msg.sunk[j]);
-            if(cur.style.backgroundColor !== 'lightblue'){
-              cur.style.backgroundColor = 'lightgray';
-              cur.className = 'shot';
-            }
-          }
-          if(msg.won){
-            document.getElementById('overlay').style.display = 'block';
-            var message = document.getElementById('message');
-            message.style.display = "block";
-            // TODO message on screen !!You won!!
-          }
-        }
-      }
-      else{
-        var cur = document.getElementById(msg.cell.substring(1,msg.cell.length));
-        cur.style.backgroundColor = 'lightgray';
-      }
-    }
-    else{
-      if(msg.hit === true){
-        var cur = document.getElementById(msg.cell.substring(1,msg.cell.length));
-        cur.style.backgroundColor = 'lightblue';
-        if(msg.sunk){
-          for(let j = 0; j < msg.sunk.length; j++){
-            cur = document.getElementById(msg.sunk[j].substring(1,msg.sunk[j].length));
-            if(cur.style.backgroundColor !== 'lightblue'){
-              cur.style.backgroundColor = 'lightgray';
-              cur.className = 'shot';
-            }
-          }
-          if(msg.won){
-            document.getElementById('overlay').style.display = 'block';
-            var message = document.getElementById('message');
-            message.style.display = "block";
-            // TODO message on screen !!You lost!!
-          }
-        }
-      }
-      else{
-        var cur = document.getElementById(msg.cell);
-        cur.style.backgroundColor = 'lightgray';
-      }
-    }
-    turn = msg.turn;
-  }
-
-  if(turn === player) {
-    var clickedGridCells = document.getElementsByClassName('_gridCell');
-    clickedGridCell(clickedGridCells);
-  }
-  else {
-    var clickedGridCells = document.getElementsByClassName('_gridCell');
-    clickedGridCell_disable(clickedGridCells);
   }
 
 }

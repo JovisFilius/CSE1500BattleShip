@@ -39,7 +39,7 @@ setInterval(function() {
     }
 }, 60000);
 
-var currentGame = new Game(gameStats.gamesInitialized++);
+var currentGame = new Game(gameStats.gamesInitialized);
 var connectionID = 0;
 
 
@@ -67,17 +67,20 @@ wss.on("connection", function connection(ws) {
         // console.log(msg);   
 
         if(msg.type === 'data') {
-            if(websockets[con.id].playerA === con){
-                websockets[con.id].dataA = msg.data;
-            }
+            if(websockets[con.id].playerA === con) websockets[con.id].dataA = msg.data;
             else websockets[con.id].dataB = msg.data;
         } 
         
+        if(msg.type === 'stop'){
+            if(msg.player === 'A') websockets[con.id].playerB.send(JSON.stringify({type: 'stop'}));
+            else websockets[con.id].playerA.send(JSON.stringify({type: 'stop'}));
+            gameStats.gamesAborted++;
+        }
 
         if(msg.type === 'shot') {
             var data = {};
             if((msg.player) === 'A') {
-                if(websockets[con.id].dataB[msg.cell.substring(1,3)]){
+                if(websockets[con.id].dataB[msg.cell.substring(1,msg.cell.length)]){
                     // console.log('hit');
                     data['hit'] = true;
                     data['turn'] = 'A';
@@ -92,7 +95,9 @@ wss.on("connection", function connection(ws) {
                         // console.log('Ship shunk!');
                         if (websockets[con.id].dataB['ships'] === 0){
                             data['won'] = 'A';
-                            console.log('Player A wins');
+                            websockets[con.id].finalStatus = true;
+                            gameStats.gamesCompleted++;
+                            // console.log('Player A wins');
                         };
                     }
                 }
@@ -103,7 +108,7 @@ wss.on("connection", function connection(ws) {
                 }
             }
             else{
-                if(websockets[con.id].dataA[msg.cell.substring(1,3)]){
+                if(websockets[con.id].dataA[msg.cell.substring(1,msg.cell.length)]){
                     // console.log('hit');
                     data['hit'] = true;
                     data['turn'] = 'B'; 
@@ -118,7 +123,9 @@ wss.on("connection", function connection(ws) {
                         // console.log('Ship shunk!');
                         if (websockets[con.id].dataA['ships'] === 0){
                             data['won'] = 'B';
-                            console.log('Player B wins');
+                            websockets[con.id].finalStatus = true;
+                            gameStats.gamesCompleted++;
+                            // console.log('Player B wins');
                         };
                     }
                 }
