@@ -30,7 +30,7 @@ var websockets = {};
 function checkConnection(con){
 
     if(con.playerA) if(con.playerA.readyState === 3) if(con.playerB) {
-        con.playerB.send(JSON.stringify({type: 'stop'}));
+        if(con.playerB.readyState === 1) con.playerB.send(JSON.stringify({type: 'stop'}));
         con.playerA = null;
         con.playerB = null;
         con.finalStatus = true;
@@ -39,7 +39,7 @@ function checkConnection(con){
     }
 
     if(con.playerB) if(con.playerB.readyState === 3) if(con.playerA) {
-        con.playerA.send(JSON.stringify({type: 'stop'}));
+        if(con.playerA.readyState === 1) con.playerA.send(JSON.stringify({type: 'stop'}));
         con.playerA = null;
         con.playerB = null;
         con.finalStatus = true;
