@@ -62,7 +62,7 @@ setInterval(function() {
             }
         }
     }
-}, 60000);
+}, 20000);
 
 var currentGame = new Game(gameStats.gamesInitialized);
 var connectionID = 0;
