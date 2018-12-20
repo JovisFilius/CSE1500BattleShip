@@ -393,7 +393,6 @@ function playerData(){
     }
     data['ships'] = ships.length;
   }
-  // console.log(data);
   var dataSend = {};
   dataSend['type'] = 'data';
   dataSend['data'] = data;
@@ -438,7 +437,6 @@ function soundSetting(){
 
 function closeGame(){
   if(socket){
-    socket.send(JSON.stringify({type: 'stop', player: player}));
     socket.close();
   }
 }
@@ -486,7 +484,7 @@ function listen(event){
     var message = document.getElementById('message');
     message.style.display = "block";
     message.innerHTML = "<h1>Opponent left match!</h1>";
-    message.onclick = function () {
+    document.getElementById('overlay').onclick = function () {
       var form = document.createElement("FORM");
       form.method = "POST";
       form.style.display = "none";
@@ -515,7 +513,7 @@ function listen(event){
             var message = document.getElementById('message');
             message.style.display = "block";
             message.innerHTML = "<h1>You Won!</h1>";
-            message.onclick = function () {
+            document.getElementById('overlay').onclick = function () {
               var form = document.createElement("FORM");
               form.method = "POST";
               form.style.display = "none";
@@ -549,7 +547,7 @@ function listen(event){
             var message = document.getElementById('message');
             message.style.display = "block";
             message.innerHTML = "<h1>You Lost!</h1>";
-            message.onclick = function () {
+            document.getElementById('overlay').onclick = function () {
               var form = document.createElement("FORM");
               form.method = "POST";
               form.style.display = "none";
