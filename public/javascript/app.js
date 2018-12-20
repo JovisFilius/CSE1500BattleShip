@@ -406,7 +406,7 @@ function playClicked(){
     document.getElementById('message').style.display = "block";
     disableShipMovement();
     var data = playerData();
-    socket = new WebSocket("ws://localhost:4444");
+    socket = new WebSocket(location.origin.replace(/^http/, 'ws'));
     socket.onopen = function(event){
       socket.send(JSON.stringify(data));
       console.log('clicked play button, sending data to server');
