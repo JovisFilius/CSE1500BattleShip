@@ -1,8 +1,339 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  text-align: center;
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+}
+
+main {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+header {
+  width: 1200px;
+  margin: auto;
+  overflow: auto;
+}
+
+.splashHeader, .splashMain, .splashFooter{
+  position: relative;
+  overflow: hidden;
+  padding-top: 100px;
+}
+
+.splashHeader{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.splashHeader > h1 {
+  display: inline;
+  font-size: 90px;
+}
+
+.splashHeader > img {
+  display: inline;
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  color: red;
+}
+
+.splashMain {
+  height: 370px;
+}
+
+.splashMain > h2 {
+  font-size: 64px;
+  height: 140px;
+  width: 650px;
+  cursor: pointer;
+}
+
+.splashMain > img {
+  position: absolute;
+  left: 700px;
+  top: 100px;
+  width: 380px;
+  transform: rotate(20deg);
+}
+
+footer{
+  width: 1200px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.splashFooter > h3 {
+  float: left;
+  width: 350px;
+  font-size: 120%;
+}
+
+button.sound, button.close{
+  background: none;
+  border: none;
+  margin: 25px;
+  height: 56px;
+}
+
+.sound {
+  float: left;
+}
+
+.close {
+  float: right;
+}
+
+main {
+  width: 1200px;
+  margin: auto;
+}
+
+main > div {
+  width: 500px;
+  height: 520px;
+  margin: 50px;
+  float: left;
+  position: relative;
+}
+
+.player >  img, .player2 > img {
+  position: absolute;
+  left: 184px;
+  top: 10px;
+  z-index: -1;
+}
+
+.player > h4, .player2 > h4 {
+  position: absolute;
+  left: 315px;
+  top: 20px;
+  font-size: 150%;
+}
+
+.board {
+  position: absolute;
+  top: 84px;
+  width: 440px;
+  margin: auto;
+  overflow: auto;
+}
+
+.gridCell, ._gridCell {
+  background-color: white;
+}
+
+.board > div {
+  width: 38px;
+  height: 38px;
+  float: left;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.board > .coordinate {
+  width: 40px;
+  border-width: 0px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.other > h2 {
+  font-size: 300%;
+}
+
+._gridCell[shadow="a"]:hover {
+  background-color: yellow;
+}
+
+.ship {
+  position: absolute;
+  height: 34px;
+  background-color: lightblue;
+  opacity: 0.75;
+  border-style: solid;
+  border-width: 4px;
+  transform-origin: 20px 20px;
+  transition: transform 1s;
+}
+
+.wiggling {
+  animation: wiggle 0.3s linear infinite;
+}
+
+@keyframes wiggle {
+  from {
+    transform: translate(0px, 0px)
+  }
+
+  20%{
+    transform: translate( -15px, 0px)
+  }
+
+  40%{
+    transform: translate(0px, -10px)
+  }
+
+  60%{
+    transform: translate( 10px, 0px)
+  }
+
+  80%{
+    transform: translate( 0px , 15px)
+  }
+
+  to{
+    transform: translate( 0px, 0px)
+  }
+}
+
+#ship_4_1 {
+  width: 152px;
+  top: 100px;
+  left: 50px;
+}
+
+#ship_3_1 {
+  width: 112px;
+  top: 180px;
+  left:50px;
+}
+
+#ship_3_2 {
+  width: 112px;
+  top: 180px;
+  left: 210px;
+}
+
+#ship_2_1 {
+  width: 72px;
+  top: 260px;
+  left: 50px;
+}
+
+#ship_2_2 {
+  width: 72px;
+  top: 260px;
+  left: 170px;
+}
+
+#ship_2_3 {
+  width: 72px;
+  top: 260px;
+  left: 290px;
+}
+
+#ship_1_1 {
+  width: 32px;
+  top: 340px;
+  left: 50px;
+}
+
+#ship_1_2 {
+  width: 32px;
+  top: 340px;
+  left: 130px;
+}
+
+#ship_1_3 {
+  width: 32px;
+  top: 340px;
+  left: 210px;
+}
+
+#ship_1_4 {
+  width: 32px;
+  top: 340px;
+  left: 290px;
+}
+
+.other > button {
+  position: absolute;
+}
+
+#rotate {
+  width: 150px;
+  height: 50px;
+  top: 425px;
+  left: 50px;
+}
+
+#rotate:disabled {
+  color: gray;
+  background-color: lightgray;
+}
+
+#rotate > img, #play > img {
+  float: left;
+}
+
+#rotate > h4, #play > h4 {
+  margin: auto;
+  font-size: 150%;
+}
+
+#play {
+  width: 150px;
+  height: 50px;
+  top: 425px;
+  left: 250px;
+}
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#message {
+  position: fixed;
+  display: none;
+  left: 50%;
+  top: 50%;
+  margin-left: -385px;
+  margin-top: -50px;
+  width: 770px;
+  height: 100px;
+  background-color: lightgray;
+  z-index: 3;
+  cursor: help;
+}
+
+#playRules > h1, #message > h1 {
+  font-size: 300%;
+  padding: 25px;
+}
+
+#playRules > h2 {
+  padding-left: 40px;
+  padding-top: 40px;
+  font-size: 150%;
+}
+
+#playRules {
+  position: fixed;
+  display: none;
+  left: 50%;
+  top: 50%;
+  margin-left: -400px;
+  margin-top: -200px;
+  width: 800px;
+  height: 400px;
+  background-color: lightgray;
+  z-index: 3;
+  cursor: help;
 }

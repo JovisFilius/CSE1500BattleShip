@@ -2,153 +2,294 @@
 <html>
     <head>
         <title>Battleship - CSE3.03</title>
+        <link href="stylesheets/reset.css" rel="stylesheet" type="text/css">
         <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
     </head>
-    <body>
-        <div>
-            <button><img src="sound.png" alt="Image of sound state"></button>
-            <button>x</button>
-            <div>
-                <img src="player.png" alt="Image of player">
+    <body>   
+            <div id="overlay"></div>
+            <div id="message"><h1>WAITING FOR OPPONENT ...</h1></div>     
+        <header>
+            <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+            <button class="sound"><img src="./images/soundIcon.png" alt="Image of sound state" id="soundIcon"></button>
+            <form action="/" method="POST">
+                <button class="close" type="submit"><img src="images/close_noBackground_small_square.png" alt="close cross"></button>
+            </form>
+        </header>
+        <main>
+            <div class="player">
+                <img id= "you" src="./images/player1_noBackground_small_cutoff.png" alt="Image of player">
                 <h4>You</h4>
-                <div class="A1"></div>
-                <div class="A1"></div>
-                <div class="A2"></div>
-                <div class="A3"></div>
-                <div class="A4"></div>
-                <div class="A5"></div>
-                <div class="A6"></div>
-                <div class="A7"></div>
-                <div class="A8"></div>
-                <div class="A9"></div>
-                <div class="A10"></div>
-                <div class="B1"></div>
-                <div class="B2"></div>
-                <div class="B3"></div>
-                <div class="B4"></div>
-                <div class="B5"></div>
-                <div class="B6"></div>
-                <div class="B7"></div>
-                <div class="B8"></div>
-                <div class="B9"></div>
-                <div class="B10"></div>
-                <div class="C1"></div>
-                <div class="C2"></div>
-                <div class="C3"></div>
-                <div class="C4"></div>
-                <div class="C5"></div>
-                <div class="C6"></div>
-                <div class="C7"></div>
-                <div class="C8"></div>
-                <div class="C9"></div>
-                <div class="C10"></div>
-                <div class="D1"></div>
-                <div class="D2"></div>
-                <div class="D3"></div>
-                <div class="D4"></div>
-                <div class="D5"></div>
-                <div class="D6"></div>
-                <div class="D7"></div>
-                <div class="D8"></div>
-                <div class="D9"></div>
-                <div class="D10"></div>
-                <div class="E1"></div>
-                <div class="E2"></div>
-                <div class="E3"></div>
-                <div class="E4"></div>
-                <div class="E5"></div>
-                <div class="E6"></div>
-                <div class="E7"></div>
-                <div class="E8"></div>
-                <div class="E9"></div>
-                <div class="E10"></div>
-                <div class="F1"></div>
-                <div class="F2"></div>
-                <div class="F3"></div>
-                <div class="F4"></div>
-                <div class="F5"></div>
-                <div class="F6"></div>
-                <div class="F7"></div>
-                <div class="F8"></div>
-                <div class="F9"></div>
-                <div class="F10"></div>
-                <div class="G1"></div>
-                <div class="G2"></div>
-                <div class="G3"></div>
-                <div class="G4"></div>
-                <div class="G5"></div>
-                <div class="G6"></div>
-                <div class="G7"></div>
-                <div class="G8"></div>
-                <div class="G9"></div>
-                <div class="G10"></div>
-                <div class="H1"></div>
-                <div class="H2"></div>
-                <div class="H3"></div>
-                <div class="H4"></div>
-                <div class="H5"></div>
-                <div class="H6"></div>
-                <div class="H7"></div>
-                <div class="H8"></div>
-                <div class="H9"></div>
-                <div class="H10"></div>
-                <div class="I1"></div>
-                <div class="I2"></div>
-                <div class="I3"></div>
-                <div class="I4"></div>
-                <div class="I5"></div>
-                <div class="I6"></div>
-                <div class="I7"></div>
-                <div class="I8"></div>
-                <div class="I9"></div>
-                <div class="I10"></div>
-                <div class="J1"></div>
-                <div class="J2"></div>
-                <div class="J3"></div>
-                <div class="J4"></div>
-                <div class="J5"></div>
-                <div class="J6"></div>
-                <div class="J7"></div>
-                <div class="J8"></div>
-                <div class="J9"></div>
-                <div class="J10"></div>
-                <div class="A"><h4>A</h4></div>
-                <div class="B"><h4>B</h4></div>
-                <div class="C"><h4>C</h4></div>
-                <div class="D"><h4>D</h4></div>
-                <div class="E"><h4>E</h4></div>
-                <div class="F"><h4>F</h4></div>
-                <div class="G"><h4>G</h4></div>
-                <div class="H"><h4>H</h4></div>
-                <div class="I"><h4>I</h4></div>
-                <div class="J"><h4>J</h4></div>
-                <div class="1"><h4>1</h4></div>
-                <div class="2"><h4>2</h4></div>
-                <div class="3"><h4>3</h4></div>
-                <div class="4"><h4>4</h4></div>
-                <div class="5"><h4>5</h4></div>
-                <div class="6"><h4>6</h4></div>
-                <div class="7"><h4>7</h4></div>
-                <div class="8"><h4>8</h4></div>
-                <div class="9"><h4>9</h4></div>
-                <div class="10"><h4>10</h4></div>
+                <div class="board">
+                    <div class="coordinate"><h4>A</h4></div>
+                    <div class="gridCell" id="A1"></div>
+                    <div class="gridCell" id="A2"></div>
+                    <div class="gridCell" id="A3"></div>
+                    <div class="gridCell" id="A4"></div>
+                    <div class="gridCell" id="A5"></div>
+                    <div class="gridCell" id="A6"></div>
+                    <div class="gridCell" id="A7"></div>
+                    <div class="gridCell" id="A8"></div>
+                    <div class="gridCell" id="A9"></div>
+                    <div class="gridCell" id="A10"></div>
+                    <div class="coordinate"><h4>B</h4></div>
+                    <div class="gridCell" id="B1"></div>
+                    <div class="gridCell" id="B2"></div>
+                    <div class="gridCell" id="B3"></div>
+                    <div class="gridCell" id="B4"></div>
+                    <div class="gridCell" id="B5"></div>
+                    <div class="gridCell" id="B6"></div>
+                    <div class="gridCell" id="B7"></div>
+                    <div class="gridCell" id="B8"></div>
+                    <div class="gridCell" id="B9"></div>
+                    <div class="gridCell" id="B10"></div>
+                    <div class="coordinate"><h4>C</h4></div>
+                    <div class="gridCell" id="C1"></div>
+                    <div class="gridCell" id="C2"></div>
+                    <div class="gridCell" id="C3"></div>
+                    <div class="gridCell" id="C4"></div>
+                    <div class="gridCell" id="C5"></div>
+                    <div class="gridCell" id="C6"></div>
+                    <div class="gridCell" id="C7"></div>
+                    <div class="gridCell" id="C8"></div>
+                    <div class="gridCell" id="C9"></div>
+                    <div class="gridCell" id="C10"></div>
+                    <div class="coordinate"><h4>D</h4></div>
+                    <div class="gridCell" id="D1"></div>
+                    <div class="gridCell" id="D2"></div>
+                    <div class="gridCell" id="D3"></div>
+                    <div class="gridCell" id="D4"></div>
+                    <div class="gridCell" id="D5"></div>
+                    <div class="gridCell" id="D6"></div>
+                    <div class="gridCell" id="D7"></div>
+                    <div class="gridCell" id="D8"></div>
+                    <div class="gridCell" id="D9"></div>
+                    <div class="gridCell" id="D10"></div>
+                    <div class="coordinate"><h4>E</h4></div>
+                    <div class="gridCell" id="E1"></div>
+                    <div class="gridCell" id="E2"></div>
+                    <div class="gridCell" id="E3"></div>
+                    <div class="gridCell" id="E4"></div>
+                    <div class="gridCell" id="E5"></div>
+                    <div class="gridCell" id="E6"></div>
+                    <div class="gridCell" id="E7"></div>
+                    <div class="gridCell" id="E8"></div>
+                    <div class="gridCell" id="E9"></div>
+                    <div class="gridCell" id="E10"></div>
+                    <div class="coordinate"><h4>F</h4></div>
+                    <div class="gridCell" id="F1"></div>
+                    <div class="gridCell" id="F2"></div>
+                    <div class="gridCell" id="F3"></div>
+                    <div class="gridCell" id="F4"></div>
+                    <div class="gridCell" id="F5"></div>
+                    <div class="gridCell" id="F6"></div>
+                    <div class="gridCell" id="F7"></div>
+                    <div class="gridCell" id="F8"></div>
+                    <div class="gridCell" id="F9"></div>
+                    <div class="gridCell" id="F10"></div>
+                    <div class="coordinate"><h4>G</h4></div>
+                    <div class="gridCell" id="G1"></div>
+                    <div class="gridCell" id="G2"></div>
+                    <div class="gridCell" id="G3"></div>
+                    <div class="gridCell" id="G4"></div>
+                    <div class="gridCell" id="G5"></div>
+                    <div class="gridCell" id="G6"></div>
+                    <div class="gridCell" id="G7"></div>
+                    <div class="gridCell" id="G8"></div>
+                    <div class="gridCell" id="G9"></div>
+                    <div class="gridCell" id="G10"></div>
+                    <div class="coordinate"><h4>H</h4></div>
+                    <div class="gridCell" id="H1"></div>
+                    <div class="gridCell" id="H2"></div>
+                    <div class="gridCell" id="H3"></div>
+                    <div class="gridCell" id="H4"></div>
+                    <div class="gridCell" id="H5"></div>
+                    <div class="gridCell" id="H6"></div>
+                    <div class="gridCell" id="H7"></div>
+                    <div class="gridCell" id="H8"></div>
+                    <div class="gridCell" id="H9"></div>
+                    <div class="gridCell" id="H10"></div>
+                    <div class="coordinate"><h4>I</h4></div>
+                    <div class="gridCell" id="I1"></div>
+                    <div class="gridCell" id="I2"></div>
+                    <div class="gridCell" id="I3"></div>
+                    <div class="gridCell" id="I4"></div>
+                    <div class="gridCell" id="I5"></div>
+                    <div class="gridCell" id="I6"></div>
+                    <div class="gridCell" id="I7"></div>
+                    <div class="gridCell" id="I8"></div>
+                    <div class="gridCell" id="I9"></div>
+                    <div class="gridCell" id="I10"></div>
+                    <div class="coordinate"><h4>J</h4></div>
+                    <div class="gridCell" id="J1"></div>
+                    <div class="gridCell" id="J2"></div>
+                    <div class="gridCell" id="J3"></div>
+                    <div class="gridCell" id="J4"></div>
+                    <div class="gridCell" id="J5"></div>
+                    <div class="gridCell" id="J6"></div>
+                    <div class="gridCell" id="J7"></div>
+                    <div class="gridCell" id="J8"></div>
+                    <div class="gridCell" id="J9"></div>
+                    <div class="gridCell" id="J10"></div>
+                    <div class="coordinate"></div>
+                    <div class="coordinate"><h4>1</h4></div>
+                    <div class="coordinate"><h4>2</h4></div>
+                    <div class="coordinate"><h4>3</h4></div>
+                    <div class="coordinate"><h4>4</h4></div>
+                    <div class="coordinate"><h4>5</h4></div>
+                    <div class="coordinate"><h4>6</h4></div>
+                    <div class="coordinate"><h4>7</h4></div>
+                    <div class="coordinate"><h4>8</h4></div>
+                    <div class="coordinate"><h4>9</h4></div>
+                    <div class="coordinate"><h4>10</h4></div>
+                </div>
             </div>
-            <div>
+            <div class="other">
                 <h2>Place ships</h2>
-                <div class="ship_4"></div>
-                <div class="ship_3"></div>
-                <div class="ship_3"></div>
-                <div class="ship_2"></div>
-                <div class="ship_2"></div>
-                <div class="ship_2"></div>
-                <div class="ship_1"></div>
-                <div class="ship_1"></div>
-                <div class="ship_1"></div>
-                <div class="ship_1"></div>
-                <button>90</button>
-                <button>Play</button>
+                <div class="ship" id="ship_4_1" x="50" y="100"></div>
+                <div class="ship" id="ship_3_1" x="50" y="180"></div>
+                <div class="ship" id="ship_3_2" x="210" y="180"></div>
+                <div class="ship" id="ship_2_1" x="50" y="260"></div>
+                <div class="ship" id="ship_2_2" x="170" y="260"></div>
+                <div class="ship" id="ship_2_3" x="290" y="260"></div>
+                <div class="ship" id="ship_1_1" x="50" y="340"></div>
+                <div class="ship" id="ship_1_2" x="130" y="340"></div>
+                <div class="ship" id="ship_1_3" x="210" y="340"></div>
+                <div class="ship" id="ship_1_4" x="290" y="340"></div>
+                <button id="rotate"><img src="./images/rotate_small.png"><h4>90°</h4></button>
+                <button id="play"><img src="./images/play_small.png"><h4>Play</h4></button>
             </div>
-        </div>
-        <script src="javascrips/app.js"></script>
+            <div class="player2" hidden='true'>
+                <img id= "opp" src="./images/player2_noBackground_small_cutoff.png" alt="Image of player">
+                <h4>Opponent</h4>
+                <div class="board">
+                    <div class="coordinate"><h4>A</h4></div>
+                    <div class="_gridCell" id="_A1"></div>
+                    <div class="_gridCell" id="_A2"></div>
+                    <div class="_gridCell" id="_A3"></div>
+                    <div class="_gridCell" id="_A4"></div>
+                    <div class="_gridCell" id="_A5"></div>
+                    <div class="_gridCell" id="_A6"></div>
+                    <div class="_gridCell" id="_A7"></div>
+                    <div class="_gridCell" id="_A8"></div>
+                    <div class="_gridCell" id="_A9"></div>
+                    <div class="_gridCell" id="_A10"></div>
+                    <div class="coordinate"><h4>B</h4></div>
+                    <div class="_gridCell" id="_B1"></div>
+                    <div class="_gridCell" id="_B2"></div>
+                    <div class="_gridCell" id="_B3"></div>
+                    <div class="_gridCell" id="_B4"></div>
+                    <div class="_gridCell" id="_B5"></div>
+                    <div class="_gridCell" id="_B6"></div>
+                    <div class="_gridCell" id="_B7"></div>
+                    <div class="_gridCell" id="_B8"></div>
+                    <div class="_gridCell" id="_B9"></div>
+                    <div class="_gridCell" id="_B10"></div>
+                    <div class="coordinate"><h4>C</h4></div>
+                    <div class="_gridCell" id="_C1"></div>
+                    <div class="_gridCell" id="_C2"></div>
+                    <div class="_gridCell" id="_C3"></div>
+                    <div class="_gridCell" id="_C4"></div>
+                    <div class="_gridCell" id="_C5"></div>
+                    <div class="_gridCell" id="_C6"></div>
+                    <div class="_gridCell" id="_C7"></div>
+                    <div class="_gridCell" id="_C8"></div>
+                    <div class="_gridCell" id="_C9"></div>
+                    <div class="_gridCell" id="_C10"></div>
+                    <div class="coordinate"><h4>D</h4></div>
+                    <div class="_gridCell" id="_D1"></div>
+                    <div class="_gridCell" id="_D2"></div>
+                    <div class="_gridCell" id="_D3"></div>
+                    <div class="_gridCell" id="_D4"></div>
+                    <div class="_gridCell" id="_D5"></div>
+                    <div class="_gridCell" id="_D6"></div>
+                    <div class="_gridCell" id="_D7"></div>
+                    <div class="_gridCell" id="_D8"></div>
+                    <div class="_gridCell" id="_D9"></div>
+                    <div class="_gridCell" id="_D10"></div>
+                    <div class="coordinate"><h4>E</h4></div>
+                    <div class="_gridCell" id="_E1"></div>
+                    <div class="_gridCell" id="_E2"></div>
+                    <div class="_gridCell" id="_E3"></div>
+                    <div class="_gridCell" id="_E4"></div>
+                    <div class="_gridCell" id="_E5"></div>
+                    <div class="_gridCell" id="_E6"></div>
+                    <div class="_gridCell" id="_E7"></div>
+                    <div class="_gridCell" id="_E8"></div>
+                    <div class="_gridCell" id="_E9"></div>
+                    <div class="_gridCell" id="_E10"></div>
+                    <div class="coordinate"><h4>F</h4></div>
+                    <div class="_gridCell" id="_F1"></div>
+                    <div class="_gridCell" id="_F2"></div>
+                    <div class="_gridCell" id="_F3"></div>
+                    <div class="_gridCell" id="_F4"></div>
+                    <div class="_gridCell" id="_F5"></div>
+                    <div class="_gridCell" id="_F6"></div>
+                    <div class="_gridCell" id="_F7"></div>
+                    <div class="_gridCell" id="_F8"></div>
+                    <div class="_gridCell" id="_F9"></div>
+                    <div class="_gridCell" id="_F10"></div>
+                    <div class="coordinate"><h4>G</h4></div>
+                    <div class="_gridCell" id="_G1"></div>
+                    <div class="_gridCell" id="_G2"></div>
+                    <div class="_gridCell" id="_G3"></div>
+                    <div class="_gridCell" id="_G4"></div>
+                    <div class="_gridCell" id="_G5"></div>
+                    <div class="_gridCell" id="_G6"></div>
+                    <div class="_gridCell" id="_G7"></div>
+                    <div class="_gridCell" id="_G8"></div>
+                    <div class="_gridCell" id="_G9"></div>
+                    <div class="_gridCell" id="_G10"></div>
+                    <div class="coordinate"><h4>H</h4></div>
+                    <div class="_gridCell" id="_H1"></div>
+                    <div class="_gridCell" id="_H2"></div>
+                    <div class="_gridCell" id="_H3"></div>
+                    <div class="_gridCell" id="_H4"></div>
+                    <div class="_gridCell" id="_H5"></div>
+                    <div class="_gridCell" id="_H6"></div>
+                    <div class="_gridCell" id="_H7"></div>
+                    <div class="_gridCell" id="_H8"></div>
+                    <div class="_gridCell" id="_H9"></div>
+                    <div class="_gridCell" id="_H10"></div>
+                    <div class="coordinate"><h4>I</h4></div>
+                    <div class="_gridCell" id="_I1"></div>
+                    <div class="_gridCell" id="_I2"></div>
+                    <div class="_gridCell" id="_I3"></div>
+                    <div class="_gridCell" id="_I4"></div>
+                    <div class="_gridCell" id="_I5"></div>
+                    <div class="_gridCell" id="_I6"></div>
+                    <div class="_gridCell" id="_I7"></div>
+                    <div class="_gridCell" id="_I8"></div>
+                    <div class="_gridCell" id="_I9"></div>
+                    <div class="_gridCell" id="_I10"></div>
+                    <div class="coordinate"><h4>J</h4></div>
+                    <div class="_gridCell" id="_J1"></div>
+                    <div class="_gridCell" id="_J2"></div>
+                    <div class="_gridCell" id="_J3"></div>
+                    <div class="_gridCell" id="_J4"></div>
+                    <div class="_gridCell" id="_J5"></div>
+                    <div class="_gridCell" id="_J6"></div>
+                    <div class="_gridCell" id="_J7"></div>
+                    <div class="_gridCell" id="_J8"></div>
+                    <div class="_gridCell" id="_J9"></div>
+                    <div class="_gridCell" id="_J10"></div>
+                    <div class="coordinate"></div>
+                    <div class="coordinate"><h4>1</h4></div>
+                    <div class="coordinate"><h4>2</h4></div>
+                    <div class="coordinate"><h4>3</h4></div>
+                    <div class="coordinate"><h4>4</h4></div>
+                    <div class="coordinate"><h4>5</h4></div>
+                    <div class="coordinate"><h4>6</h4></div>
+                    <div class="coordinate"><h4>7</h4></div>
+                    <div class="coordinate"><h4>8</h4></div>
+                    <div class="coordinate"><h4>9</h4></div>
+                    <div class="coordinate"><h4>10</h4></div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <h2 class="playerMsg"></h2>
+        </footer>
+        <script src="javascript/app.js"></script>
     </body>
 </html>
